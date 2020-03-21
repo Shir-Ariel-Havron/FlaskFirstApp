@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "C:\\Program Files\\Python37\\python.exe",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "html.format.contentUnformatted": "pre,code,textarea,{,"
+}
