@@ -1,5 +1,11 @@
 {
     "python.pythonPath": "C:\\Program Files\\Python37\\python.exe",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "html.format.contentUnformatted": "pre,code,textarea,{,"
+    "html.format.contentUnformatted": "pre,code,textarea,{,",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "lonefy.vscode-JS-CSS-HTML-formatter"
+    }
 }
