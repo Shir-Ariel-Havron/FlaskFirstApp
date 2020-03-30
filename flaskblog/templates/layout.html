@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html dir="rtl">
 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Bootstrap RTL CSS -->
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
+        integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}"> {% if title %}
-    <title>Flask Blog - {{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    {% if title %}
+    <title>בלוג פלאסק - {{ title }}</title>
     {% else %}
-    <title>Flask Blog</title>
+    <title>בלוג פלאסק</title>
     {% endif %}
 </head>
 
@@ -22,24 +24,27 @@
         <!-- Dummy nav bar -->
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
-                <a class="navbar-brand mr-4" href="{{ url_for('main.home') }}">Flask Blog</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+                <a class="navbar-brand mr-4" href="{{ url_for('main.home') }}">בלוג פלאסק</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
-                        <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+                        <a class="nav-item nav-link" href="{{ url_for('main.home') }}">בית</a>
+                        <a class="nav-item nav-link" href="{{ url_for('main.about') }}">אודות</a>
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
                         {% if current_user.is_authenticated %}
-                        <span class="nav-item nav-link">Hello <b>{{ current_user.username }}</b>!</span>
-                        <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">New Post</a>
-                        <a class="nav-item nav-link" href="{{ url_for('users.account') }}">Account</a>
-                        <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Log Out</a> {% else %}
-                        <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
-                        <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a> {% endif %}
+                        <span class="nav-item nav-link">שלום <b>{{ current_user.username }}</b>!</span>
+                        <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">פוסט חדש</a>
+                        <a class="nav-item nav-link" href="{{ url_for('users.account') }}">משתמש</a>
+                        <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">התנתקות</a>
+                        {% else %}
+                        <a class="nav-item nav-link" href="{{ url_for('users.login') }}">התחברות</a>
+                        <a class="nav-item nav-link" href="{{ url_for('users.register') }}">הרשמה</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -48,21 +53,27 @@
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-8">
-                {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
                 <div class="alert alert-{{ category }}">
                     {{ message }}
                 </div>
-                {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                {% block content %}
+                {% endblock %}
             </div>
             <div class="col-md-4">
                 <div class="content-section">
-                    <h3>Our Sidebar</h3>
-                    <p class='text-muted'>You can put any information here you'd like.
+                    <h3>פאנל צדי</h3>
+                    <p class='text-muted'>אפשר להוסיף כאן מידע.
                         <ul class="list-group">
-                            <li class="list-group-item list-group-item-light">Latest Posts</li>
-                            <li class="list-group-item list-group-item-light">Announcements</li>
-                            <li class="list-group-item list-group-item-light">Calendars</li>
-                            <li class="list-group-item list-group-item-light">etc</li>
+                            <li class="list-group-item list-group-item-light">פוסטים אחרונים</li>
+                            <li class="list-group-item list-group-item-light">הכרזות</li>
+                            <li class="list-group-item list-group-item-light">יומן</li>
+                            <li class="list-group-item list-group-item-light">אחר</li>
                         </ul>
                     </p>
                 </div>
@@ -73,9 +84,15 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"
+        integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
