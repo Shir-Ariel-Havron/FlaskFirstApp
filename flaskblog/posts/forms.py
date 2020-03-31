@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Optional, URL
 
 
 class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    link = StringField('Youtube Video Link', validators=[Optional(), URL()])
-    submit = SubmitField('Post')
+    title = StringField('כותרת', validators=[DataRequired()])
+    content = TextAreaField('תוכן', validators=[DataRequired()])
+    link = StringField('לינק ליוטיוב', validators=[Optional(), URL()])
+    submit = SubmitField('פרסום')

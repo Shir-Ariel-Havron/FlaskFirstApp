@@ -7,65 +7,65 @@ from flaskblog.models import User
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[
+    username = StringField('שם משתמש', validators=[
                            DataRequired(), Length(min=2, max=20)])
-    email = StringField('email', validators=[DataRequired(), Email()])
-    password = PasswordField('password', validators=[DataRequired()])
-    confirm_password = PasswordField('confirm_password', validators=[
+    email = StringField('אימייל', validators=[DataRequired(), Email()])
+    password = PasswordField('סיסמה', validators=[DataRequired()])
+    confirm_password = PasswordField('אישור סיסמה', validators=[
         DataRequired(), EqualTo('password')])
-    submit = SubmitField('Sign Up!')
+    submit = SubmitField('הרשמה!')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError('Username is taken')
+            raise ValidationError('שם משתמש תפוס')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user:
-            raise ValidationError('Email is taken')
+            raise ValidationError('המייל הזה כבר בשימוש')
 
 
 class LoginForm(FlaskForm):
-    email = StringField('email', validators=[DataRequired(), Email()])
-    password = PasswordField('password', validators=[DataRequired()])
-    remember = BooleanField('Remember me')
-    submit = SubmitField('Login')
+    email = StringField('מייל', validators=[DataRequired(), Email()])
+    password = PasswordField('סיסמה', validators=[DataRequired()])
+    remember = BooleanField('זכור אותי')
+    submit = SubmitField('כניסה')
 
 
 class UpdateAccountForm(FlaskForm):
-    username = StringField('Username', validators=[
+    username = StringField('שם משתמש', validators=[
                            DataRequired(), Length(min=2, max=20)])
-    email = StringField('email', validators=[DataRequired(), Email()])
-    picture = FileField('Update profile picture', validators=[
+    email = StringField('מייל', validators=[DataRequired(), Email()])
+    picture = FileField('תמונת פרופיל', validators=[
                         FileAllowed(['jpeg', 'jpg', 'png'])])
-    submit = SubmitField('Update')
+    submit = SubmitField('עדכון')
 
     def validate_username(self, username):
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
-                raise ValidationError('Username is taken')
+                raise ValidationError('שם משתמש תפוס')
 
     def validate_email(self, email):
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:
-                raise ValidationError('Email is taken')
+                raise ValidationError('המייל הזה כבר בשימוש')
 
 
 class RequestResetForm(FlaskForm):
-    email = StringField('email', validators=[DataRequired(), Email()])
-    submit = SubmitField('Reuest Password Reset Email')
+    email = StringField('מייל', validators=[DataRequired(), Email()])
+    submit = SubmitField('שלח מייל לאיפוס סיסמה')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is None:
-            raise ValidationError('There is no account woth this email!')
+            raise ValidationError('אין חשבון המשויך לכתובת המייל הזו!')
 
 
 class ResetPasswordForm(FlaskForm):
-    password = PasswordField('password', validators=[DataRequired()])
-    confirm_password = PasswordField('confirm_password', validators=[
+    password = PasswordField('סיסמה', validators=[DataRequired()])
+    confirm_password = PasswordField('אישור סיסמה', validators=[
         DataRequired(), EqualTo('password')])
-    submit = SubmitField('Change Password')
+    submit = SubmitField('שנה סיסמה')

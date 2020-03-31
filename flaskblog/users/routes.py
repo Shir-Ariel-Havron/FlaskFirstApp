@@ -22,9 +22,9 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(
-            f'Account created for {form.username.data}! You can log in now!', 'success')
+            f'חשבון נוצר בעבור {form.username.data}! עכשיו אפשר להיכנס!', 'success')
         return redirect(url_for('users.login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', title='הרשמה', form=form)
 
 
 @users.route('/login', methods=['GET', 'POST'])
@@ -39,8 +39,8 @@ def login():
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
-            flash('Log in unsuccessful, check email and password.', 'danger')
-    return render_template('login.html', title='Login', form=form)
+            flash('סיסמה או מייל לא נכונים, נסו שוב.', 'danger')
+    return render_template('login.html', title='כניסה', form=form)
 
 
 @users.route('/logout')
@@ -60,14 +60,14 @@ def account():
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        flash('Your account has been updated', 'success')
+        flash('החשבון שלך עודכן', 'success')
         return redirect(url_for('users.account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
     image_file = url_for(
         'static', filename=f'profile_pics/{current_user.image_file}')
-    return render_template('account.html', title='Account', image_file=image_file, form=form)
+    return render_template('account.html', title='חשבון', image_file=image_file, form=form)
 
 
 @users.route('/user/<string:username>')
@@ -88,7 +88,7 @@ def reset_request():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_email(user)
-        flash('Check your email!', 'info')
+        flash('בדקו את המייל שלכם!', 'info')
         return redirect(url_for('users.login'))
     return render_template('reset_request.html', form=form)
 
@@ -99,7 +99,7 @@ def reset_token(token):
         return redirect(url_for('main.home'))
     user = User.verify_reset_token(token=token)
     if user is None:
-        flash('Invalid/Expired Token, please try again.', 'warning')
+        flash('הקוד לא נכון\לא תקף. בבקשה נסו שוב.', 'warning')
         return redirect(url_for('users.reset_request'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
@@ -108,6 +108,6 @@ def reset_token(token):
         user.password = hashed_pw
         db.session.commit()
         flash(
-            f'{user.username}, your password changed! You can log in now!', 'success')
+            f'{user.username}, הסיסמה שלך השתנתה! עכשיו אפשר להיכנס!', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', form=form)

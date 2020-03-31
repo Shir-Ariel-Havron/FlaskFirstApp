@@ -23,10 +23,10 @@ def save_picture(form_picture):
 
 def send_reset_email(user):
     token = user.get_reset_token()
-    msg = Message('Password Reset Request',
+    msg = Message('בקשת איפוס סיסמה',
                   sender='matan.arielhavron1@gmail.com', recipients=[user.email])
     msg.body =\
-        f'''To reset your password, please follow this link: 
+        f'''כדי לאפס סיסמה בבקשה היכנסו לקישור הבא: 
 {url_for('users.reset_token', token=token, _external=True)}
-If you didn't ask this, please ignore the mail.\n'''
+אם לא ביקשתם לאפס סיסמה, אתם יכולים להתעלם מהמייל.\n'''
     mail.send(msg)

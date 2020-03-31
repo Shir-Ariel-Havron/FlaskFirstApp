@@ -19,9 +19,9 @@ def new_post():
             post.link = form.link.data
         db.session.add(post)
         db.session.commit()
-        flash('Your post has been created!', 'success')
+        flash('הפוסט שלך נוצר!', 'success')
         return redirect(url_for('main.home'))
-    return render_template('create_post.html', title='New Post', form=form, legend='New Post')
+    return render_template('create_post.html', title='פוסט חדש', form=form, legend='יצירת פוסט')
 
 
 @posts.route('/post/<int:post_id>')
@@ -43,13 +43,13 @@ def update_post(post_id):
         if form.link.data:
             post.link = form.link.data
         db.session.commit()
-        flash('Your post has been updated!', 'success')
+        flash('הפוסט שלך עודכן!', 'success')
         return redirect(url_for('posts.post', post_id=post.id))
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
         form.link.data = post.link
-    return render_template('create_post.html', title='Update Post', form=form, legend='Update Post')
+    return render_template('create_post.html', title='עדכון פוסט', form=form, legend='עדכון פוסט')
 
 
 @posts.route('/post/<int:post_id>/delete', methods=['POST'])
@@ -60,5 +60,5 @@ def delete_post(post_id):
         abort(403)
     db.session.delete(post)
     db.session.commit()
-    flash('Your post has been deleted!', 'success')
+    flash('הפוסט שלך נמחק!', 'success')
     return redirect(url_for('main.home'))
