@@ -21,9 +21,10 @@ def register():
                     email=form.email.data, password=hashed_pw)
         db.session.add(user)
         db.session.commit()
+        login_user(user)
         flash(
-            f'חשבון נוצר בעבור {form.username.data}! עכשיו אפשר להיכנס!', 'success')
-        return redirect(url_for('users.login'))
+            f'חשבון נוצר בעבור {form.username.data}', 'success')
+        return redirect(url_for('main.home'))
     return render_template('register.html', title='הרשמה', form=form)
 
 

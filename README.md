@@ -5,3 +5,14 @@ run in python console from base dir:
     app.app_context().push()
     from flaskblog import db
     db.create_all()
+
+to add a table column:
+run in python terminal:
+    from flaskblog import create_app
+    app = create_app()
+    app.app_context().push()
+    from flaskblog import db
+    from flaskblog.models import add_column
+    column = db.Column(...)
+    add_column(app, 'table name', column)
+then change the table's Model accordingly.

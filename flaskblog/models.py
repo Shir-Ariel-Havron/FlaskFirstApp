@@ -3,11 +3,22 @@ from datetime import datetime as dt
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
+from sqlalchemy import create_engine
+from sqlalchemy.dialects import postgresql
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+def add_column(app, table_name, column):
+    engine = create_engine(
+        app.config['SQLALCHEMY_DATABASE_URI'], convert_unicode=True)
+    column_name = column.compile(dialect=engine.dialect)
+    column_type = column.type.compile(engine.dialect)
+    engine.execute(
+        f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type}')
 
 
 class User(db.Model, UserMixin):
@@ -42,6 +53,7 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=dt.utcnow)
     content = db.Column(db.Text, nullable=False)
     link = db.Column(db.String(2048))
+    tags = db.Column(postgresql.ARRAY(db.String))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
